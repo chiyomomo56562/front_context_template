@@ -10,7 +10,7 @@
 ```
 {featureName}/
 ├── components/ # {Feature}Container.tsx, {Feature}View.tsx
-├── hooks/      # use{Feature}Query.ts, use{Feature}Action.ts
+├── hooks/      # use{Action}Query.ts, use{Entity}{Role}.ts (필요 시 역할별 통합)
 ├── api.ts      # 네트워크 요청
 ├── mapper.ts   # API Response -> UI Model 변환
 ├── types.ts    # 타입 정의
@@ -24,8 +24,8 @@
     - 예: `BookContainer.tsx`, `BookView.tsx`
 
 ### Hooks
-- **Hook & File Name**: `camelCase`를 사용하며 `use` 접두사를 붙입니다.
-    - 예: `useBookQuery.ts`, `useBookAction.ts`
+- **Hook & File Name**: `camelCase`를 사용하며 `use` 접두사를 붙입니다. 엔티티와 생명주기가 같다면 하나의 파일에 여러 훅(Query, Mutation)을 통합할 수 있습니다.
+    - 예: 단일 - `useBooksQuery.ts`, 통합 - `useBookActions.ts` (역할 명시)
 
 ### Functions & Variables
 - **Standard**: `camelCase`를 사용합니다.

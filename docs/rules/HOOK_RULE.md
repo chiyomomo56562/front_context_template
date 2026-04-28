@@ -45,11 +45,25 @@ export const useCreateBookMutation = () => {
 ## 3. Naming Conventions (Airbnb Standard)
 
 - **Hook & File Name**: `camelCase`를 사용하며 `use` 접두사를 붙입니다.
-    - Queries: `use{Entity}Query` 또는 `use{Action}Query`
-    - Mutations: `use{Action}{Entity}Mutation`
-    - 예: `useBookQuery.ts`, `useCreateBookMutation.ts`
+    - **Single Hook File**: 파일 내에 훅이 하나인 경우, 해당 훅의 이름을 파일명으로 사용합니다. (예: `useBooksQuery.ts`, `useCreateBookMutation.ts`)
+    - **Grouped Hook File**: 여러 훅을 통합할 경우, 역할과 엔티티를 포함하여 명확한 이름을 사용합니다. (예: `useBookActions.ts`, `useRentalHistory.ts`)
+    - **Hook Name**: Query는 `use{Action}Query`, Mutation은 `use{Action}Mutation` 형식을 유지합니다.
 
 ## 4. Hook Internal Structure
 
 - Hook 내부에서 복잡한 데이터 가공을 하지 않습니다. 가공이 필요한 경우 `mapper.ts`나 `utils/`를 활용하십시오.
 - 여러 API 호출이 필요한 경우 `useQueries` 또는 별도의 `Logic` 훅으로 추상화합니다.
+
+## 5. Hook Consolidation Policy (Grouping)
+
+- **원칙**: 불필요한 파일 파편화를 방지하고 응집도를 높이기 위해, 아래 조건 충족 시 하나의 파일로 통합합니다.
+- **통합 기준**:
+  1. **동일 엔티티(Entity)**: 동일한 도메인 객체를 다루는 경우.
+  2. **동일 생명주기(Lifecycle)**: 동일한 컴포넌트나 페이지 내에서 함께 사용되는 경우.
+- **파일 예시 (`useBookActions.ts`)**:
+  ```ts
+  // 역할과 엔티티가 명확한 파일명으로 관련 훅들을 통합
+  export const useBooksQuery = () => { ... };
+  export const useCreateBookMutation = () => { ... };
+  export const useDeleteBookMutation = () => { ... };
+  ```
